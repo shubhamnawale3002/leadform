@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  .column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+  }
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 600px) {
+    .column {
+      width: 100%;
+    }
+  }
+
+  input[type=text],
+  select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    box-sizing: border-box;
+    background-color: #f5f8fa;
+  }
+
+  input[type=email],
+  select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    box-sizing: border-box;
+    background-color: #f5f8fa;
+  }
+
+  input[type=tel],
+  select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    box-sizing: border-box;
+    background-color: #f5f8fa;
+  }
+
+  input[type=submit] {
+
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    border-radius: 16px;
+  }
+
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    box-sizing: border-box;
+    background-color: #f5f8fa;
+
+  }
+
+  div {
+    border-radius: 5px;
+
+    padding: 20px;
+  }
+
+  .required {
+    color: rgb(255, 0, 0);
+  }
+
+  .small-text {
+    font-size: 12px;
+    /* Make the text smaller */
+    margin: 0;
+    /* Remove margin */
+    padding: 0;
+    /* Remove padding */
+    line-height: 1.4;
+    color: black;
+    /* Adjust line spacing for better readability */
+  }
+
+  .small-text a {
+    color: rgb(5, 5, 254);
+    /* Set link color (optional) */
+    text-decoration: none;
+    /* Remove underline from link */
+  }
+
+  .small-text a:hover {
+    text-decoration: underline;
+    /* Add underline on hover */
+  }
+
+  .info-icon {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    padding: 1px 5px;
+    font-size: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+    position: relative;
+
+  }
+
+  .help-text {
+    display: none;
+    background-color: #f1f1f1;
+    color: #333;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    position: absolute;
+    width: 200px;
+  }
+
+  .info-icon:hover + .help-text {
+    display: block;
+  }
+
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity for background */
+    padding-top: 60px; /* Place content 60px from the top */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe; /* White background */
+    margin: 20% auto; /* Center the modal */
+    padding: 20px;
+    border: 1px solid #888; /* Light gray border */
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 500px; /* Maximum width of the modal */
+    text-align: center; /* Center text inside the modal */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+/* Close button */
+.close {
+    color: #aaa; /* Light gray color */
+    float: right; /* Position to the right */
+    font-size: 28px; /* Larger font size */
+    font-weight: bold; /* Bold font */
+}
+
+.close:hover,
+.close:focus {
+    color: black; /* Change color on hover/focus */
+    text-decoration: none; /* Remove underline */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+/* Modal text styling */
+.modal-content p {
+    font-size: 18px; /* Font size for text */
+    margin: 0; /* Remove default margin */
+    padding: 10px 0; /* Padding above and below the text */
+}
+</style>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DF00000007LLd"
+    method="POST" id="productForm" onsubmit="handleSubmit(event)">
+
+    <input type=hidden name="oid" value="00DF00000007LLd">
+    <input type=hidden name="retURL" value="http://sonimtech.com">
+
+
+    <div class="row">
+      <H1>Contact Sales</H1>
+
+      <p><b>If you need <a href="https://www.sonimtech.com/support/contact-support/" target="_blank">Customer
+            Support</a>,
+          please visit our Customer Support page and submit your request,
+          send an email to <a href="mailto:support@sonimtech.com">support@sonimtech.com</a>, or call 1-833-697-6646.
+          <br>
+          If you need online support or device user guides, please visit our
+          <a href="https://www.sonimtech.com/support/online-support/" target="_blank">online support</a> page or
+          <a href="https://www.sonimtech.com/support/faqs/" target="_blank">Frequently Asked</a>
+          Questions page. </b></p>
+      <br>
+      <p>If you are interested in learning more about Sonim’s devices, please submit the information requested below and
+        a
+        product specialist will follow up with you promptly to provide more product information and assist with your
+        purchase.
+        Any additional information you can provide will help ensure we get you connected as soon as possible.</p>
+      <div class="column">
+        <label for="first_name">First Name<span class="required">*</span></label>
+        <input id="first_name " required maxlength="40" name="first_name" size="20" type="text" />
+      </div>
+      <div class="column">
+        <label for="last_name">Last Name<span class="required">*</span></label>
+        <input required id="last_name" maxlength="80" name="last_name" size="20" type="text" />
+      </div>
+      <div class="column">
+        <label for="email">Email<span class="required">*</span></label>
+        <input required id="email" maxlength="80" name="email" size="20"  type="email"/>
+      </div>
+      <div class="column">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}"
+        minlength="10"
+        maxlength="10"
+        oninvalid="setCustomValidity('Enter the valid Phone number.')"
+        oninput="this.setCustomValidity('')"/>
+      </div>
+      <!-- <div class="column">
+        <label for="State">State/Province/Territory</label>
+        <input id="carrier" maxlength="80" name="carrier" size="20" type="text" />
+      </div>
+      <div class="column">
+        Country:<input id="00N2I00000DupG8" maxlength="100" name="00N2I00000DupG8" size="20" type="text" /><br>
+      </div> -->
+      <div class="column">
+        <label for="country_code">Country<span class="required">*</span></label>
+        <select id="country_code" name="country_code" required>
+          <option value="">--None--</option>
+          <option value="US">United States of America</option>
+          <option value="CA">Canada</option>
+          <option value="AF">Afghanistan</option>
+          <option value="AL">Albania</option>
+          <option value="DZ">Algeria</option>
+          <option value="AS">American Samoa</option>
+          <option value="AD">Andorra</option>
+          <option value="AO">Angola</option>
+          <option value="AI">Anguilla</option>
+          <option value="AQ">Antartica</option>
+          <option value="AG">Antigua and Barbuda</option>
+          <option value="AR">Argentina</option>
+          <option value="AM">Armenia</option>
+          <option value="AW">Aruba</option>
+          <option value="AU">Australia</option>
+          <option value="AT">Austria</option>
+          <option value="AZ">Azerbaijan</option>
+          <option value="BS">Bahamas</option>
+          <option value="BH">Bahrain</option>
+          <option value="BD">Bangladesh</option>
+          <option value="BB">Barbados</option>
+          <option value="BY">Belarus</option>
+          <option value="BE">Belgium</option>
+          <option value="BZ">Belize</option>
+          <option value="BJ">Benin</option>
+          <option value="BM">Bermuda</option>
+          <option value="BT">Bhutan</option>
+          <option value="BO">Bolivia</option>
+          <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
+          <option value="BA">Bosnia and Herzegovina</option>
+          <option value="BW">Botswana</option>
+          <option value="BR">Brazil</option>
+          <option value="BN">Brunei</option>
+          <option value="BG">Bulgaria</option>
+          <option value="BF">Burkina Faso</option>
+          <option value="BI">Burundi</option>
+          <option value="CV">Cabo Verde</option>
+          <option value="KH">Cambodia</option>
+          <option value="CM">Cameroon</option>
+          <option value="KY">Cayman Islands</option>
+          <option value="CF">Central African Republic</option>
+          <option value="TD">Chad</option>
+          <option value="CL">Chile</option>
+          <option value="CN">China</option>
+          <option value="CO">Colombia</option>
+          <option value="KM">Comoros</option>
+          <option value="CG">Congo</option>
+          <option value="CD">Congo (DRC)</option>
+          <option value="CR">Costa Rica</option>
+          <option value="HR">Croatia</option>
+          <option value="CU">Cuba</option>
+          <option value="CY">Cyprus</option>
+          <option value="CZ">Czechia</option>
+          <option value="DK">Denmark</option>
+          <option value="DJ">Djibouti</option>
+          <option value="DM">Dominica</option>
+          <option value="DO">Dominican Republic</option>
+          <option value="EC">Ecuador</option>
+          <option value="EG">Egypt</option>
+          <option value="SV">El Salvador</option>
+          <option value="GQ">Equatorial Guinea</option>
+          <option value="ER">Eritrea</option>
+          <option value="EE">Estonia</option>
+          <option value="SZ">Eswatini</option>
+          <option value="ET">Ethiopia</option>
+          <option value="FJ">Fiji</option>
+          <option value="FI">Finland</option>
+          <option value="FR">France</option>
+          <option value="GA">Gabon</option>
+          <option value="GM">Gambia</option>
+          <option value="GE">Georgia</option>
+          <option value="DE">Germany</option>
+          <option value="GH">Ghana</option>
+          <option value="GR">Greece</option>
+          <option value="GL">Greenland</option>
+          <option value="GD">Grenada</option>
+          <option value="GT">Guatemala</option>
+          <option value="GN">Guinea</option>
+          <option value="GY">Guyana</option>
+          <option value="HT">Haiti</option>
+          <option value="HN">Honduras</option>
+          <option value="HK">Hong Kong</option>
+          <option value="HU">Hungary</option>
+          <option value="IN">India</option>
+          <option value="ID">Indonesia</option>
+          <option value="IR">Iran</option>
+          <option value="IQ">Iraq</option>
+          <option value="IE">Ireland</option>
+          <option value="IL">Israel</option>
+          <option value="IT">Italy</option>
+          <option value="JM">Jamaica</option>
+          <option value="JP">Japan</option>
+          <option value="JO">Jordan</option>
+          <option value="KZ">Kazakhstan</option>
+          <option value="KE">Kenya</option>
+          <option value="KR">Korea, South</option>
+          <option value="KW">Kuwait</option>
+          <option value="KG">Kyrgyzstan</option>
+          <option value="LA">Laos</option>
+          <option value="LV">Latvia</option>
+          <option value="LB">Lebanon</option>
+          <option value="LS">Lesotho</option>
+          <option value="LR">Liberia</option>
+          <option value="LY">Libya</option>
+          <option value="LT">Lithuania</option>
+          <option value="LU">Luxembourg</option>
+          <option value="MO">Macau</option>
+          <option value="MG">Madagascar</option>
+          <option value="MW">Malawi</option>
+          <option value="MY">Malaysia</option>
+          <option value="MV">Maldives</option>
+          <option value="ML">Mali</option>
+          <option value="MT">Malta</option>
+          <option value="MH">Marshall Islands</option>
+          <option value="MR">Mauritania</option>
+          <option value="MU">Mauritius</option>
+          <option value="MX">Mexico</option>
+          <option value="FM">Micronesia</option>
+          <option value="MD">Moldova</option>
+          <option value="MC">Monaco</option>
+          <option value="MN">Mongolia</option>
+          <option value="ME">Montenegro</option>
+          <option value="MA">Morocco</option>
+          <option value="MZ">Mozambique</option>
+          <option value="MM">Myanmar</option>
+          <option value="NA">Namibia</option>
+          <option value="NP">Nepal</option>
+          <option value="NL">Netherlands</option>
+          <option value="NZ">New Zealand</option>
+          <option value="NI">Nicaragua</option>
+          <option value="NE">Niger</option>
+          <option value="NG">Nigeria</option>
+          <option value="NO">Norway</option>
+          <option value="OM">Oman</option>
+          <option value="PK">Pakistan</option>
+          <option value="PA">Panama</option>
+          <option value="PY">Paraguay</option>
+          <option value="PE">Peru</option>
+          <option value="PH">Philippines</option>
+          <option value="PL">Poland</option>
+          <option value="PT">Portugal</option>
+          <option value="QA">Qatar</option>
+          <option value="RO">Romania</option>
+          <option value="RU">Russia</option>
+          <option value="RW">Rwanda</option>
+          <option value="SA">Saudi Arabia</option>
+          <option value="SN">Senegal</option>
+          <option value="RS">Serbia</option>
+          <option value="SG">Singapore</option>
+          <option value="SK">Slovakia</option>
+          <option value="SI">Slovenia</option>
+          <option value="ZA">South Africa</option>
+          <option value="ES">Spain</option>
+          <option value="LK">Sri Lanka</option>
+          <option value="SD">Sudan</option>
+          <option value="SR">Suriname</option>
+          <option value="SE">Sweden</option>
+          <option value="CH">Switzerland</option>
+          <option value="SY">Syria</option>
+          <option value="TW">Taiwan</option>
+          <option value="TJ">Tajikistan</option>
+          <option value="TH">Thailand</option>
+          <option value="TG">Togo</option>
+          <option value="TT">Trinidad and Tobago</option>
+          <option value="TN">Tunisia</option>
+          <option value="TR">Turkey</option>
+          <option value="UA">Ukraine</option>
+          <option value="AE">United Arab Emirates</option>
+          <option value="GB">United Kingdom</option>
+          <option value="UY">Uruguay</option>
+          <option value="UZ">Uzbekistan</option>
+          <option value="VE">Venezuela</option>
+          <option value="VN">Vietnam</option>
+          <option value="ZM">Zambia</option>
+          <option value="ZW">Zimbabwe</option>
+        </select><br>
+      </div>
+      <div class="column">
+        <label for="state_code">State/Province</label>
+        <select id="state_code" name="state_code">
+          <option value="">--None--</option>
+          <!-- State options will be populated based on country selection -->
+        </select><br>
+      </div>
+
+      <!-- <input type="submit" name="submit"> -->
+      <label>Desired Carrier</label><span class="required">*</span><select id="00NF000000CGlXU" name="00NF000000CGlXU"
+        title="Carrier" required>
+        <option value="">--None--</option>
+        <option value="AT&T">AT&T</option>
+        <option value="T-mobile">T-mobile</option>
+        <option value="Verizon">Verizon</option>
+        <option value="US Cellular">US Cellular</option>
+        <option value="Bell">Bell</option>
+        <option value="Rogers">Rogers</option>
+        <option value="Sasktel">Sasktel</option>
+        <option value="Telus">Telus</option>
+        <option value="Telstra">Telstra</option>
+        <option value="US-Other">US-Other</option>
+        <option value="CAN-Other">CAN-Other</option>
+        <option value="Global">Global</option>
+        <option value="Private Network">Private Network</option>
+        <option value="Unsure">Unsure</option>
+      </select><br>
+      <div class="column">
+        <label for="FirstNet_customer__c">Are you/your organization a current FirstNet customer?</label>
+        <Select id="00N2I00000DrRJq" name="00N2I00000DrRJq">
+          <option value="">Please Select</option>
+          <option value="True">Yes</option>
+          <option value="False">No</option>
+        </Select>
+        <br>
+      </div>
+
+      <div class="column">
+        <label for="Existing_Sonim_Customer__c">Are you/your organization a current Sonim customer?</label>
+        <select id="00N2I00000Dot8E" name="00N2I00000Dot8E">
+          <option value="">Please Select</option>
+          <option value="True">Yes</option>
+          <option value="False">No</option>
+        </Select>
+        <br>
+      </div>
+
+      <div class="column">
+        <label for="company">Company</label><input id="company" maxlength="40" name="company" size="20" type="text" /><br>
+      </div>
+      <div class="column">
+        <label for="title">Job title</label><input id="title" maxlength="40" name="title" size="20" type="text" /><br>
+      </div>
+
+      <label for="industry">Industry/Business Type</label><select  id="00NF000000CFmpb" name="00NF000000CFmpb" title="Vertical">
+        <option value="">--None--</option>
+        <option value="Administrative and Support Services">Administrative and Support Services</option>
+        <option value="Aerospace">Aerospace</option>
+        <option value="Agriculture">Agriculture</option>
+        <option value="Construction">Construction</option>
+        <option value="Defense">Defense</option>
+        <option value="Educational Services">Educational Services</option>
+        <option value="Energy">Energy</option>
+        <option value="Entertainment and Rec">Entertainment and Rec</option>
+        <option value="Facility Management">Facility Management</option>
+        <option value="Federal Gov't (Non Defense)">Federal Gov't (Non Defense)</option>
+        <option value="Federal Government (non-FirstNet)">Federal Government (non-FirstNet)</option>
+        <option value="Finance, Insurance and Real Est">Finance, Insurance and Real Est</option>
+        <option value="FN-911/E911 Center">FN-911/E911 Center</option>
+        <option value="FN-EMS">FN-EMS</option>
+        <option value="FN-EP-Education">FN-EP-Education</option>
+        <option value="FN-EP-Federal Gov't">FN-EP-Federal Gov't</option>
+        <option value="FN-EP-Healthcare">FN-EP-Healthcare</option>
+        <option value="FN-EP-Other">FN-EP-Other</option>
+        <option value="FN-EP-State/Local Gov't">FN-EP-State/Local Gov't</option>
+        <option value="FN-EP-Transportation">FN-EP-Transportation</option>
+        <option value="FN-EP-Utilities">FN-EP-Utilities</option>
+        <option value="FN-Fire">FN-Fire</option>
+        <option value="FN-Law Enforcement">FN-Law Enforcement</option>
+        <option value="Food Services">Food Services</option>
+        <option value="Healthcare & Social Assist">Healthcare & Social Assist</option>
+        <option value="Hospitality">Hospitality</option>
+        <option value="Information_Services">Information_Services</option>
+        <option value="Manufacturing">Manufacturing</option>
+        <option value="Oil, Gas, Petrochemical">Oil, Gas, Petrochemical</option>
+        <option value="Other Government">Other Government</option>
+        <option value="Public Safety">Public Safety</option>
+        <option value="Retail Trade">Retail Trade</option>
+        <option value="State/Local Gov't (non-FirstNet)">State/Local Gov't (non-FirstNet)</option>
+        <option value="Telecom">Telecom</option>
+        <option value="Transportation & Warehousing">Transportation & Warehousing</option>
+        <option value="Transportation - Public">Transportation - Public</option>
+        <option value="Unknown">Unknown</option>
+        <option value="Utilities">Utilities</option>
+        <option value="Waste Management">Waste Management</option>
+        <option value="Wholesale Trade">Wholesale Trade</option>
+        </select><br>
+        <br>
+
+
+      <label>Product(s) of Interest</label><span class="required">*</span><br>
+      <input type="checkbox" id="xp10" name="00N2I00000DlVdZ" value="XP10">
+      <label for="xp10">XP10</label><br>
+
+      <input type="checkbox" id="xp5plus" name="00N2I00000DlVdZ" value="XP5plus">
+      <label for="xp5plus">XP5plus</label><br>
+
+      <input type="checkbox" id="xp3plus_nocamera" name="00N2I00000DlVdZ" value="XP3plus no camera">
+      <label for="xp3plus_nocamera">XP3plus</label><br>
+
+      <input type="checkbox" id="accessories" name="00N2I00000DlVdZ" value="Accessories">
+      <label for="accessories">Accessories</label><br>
+
+      <input type="checkbox" id="sonimware" name="00N2I00000DlVdZ" value="SonimWare">
+      <label for="sonimware">SonimWare (all tools)</label><br>
+
+      <input type="checkbox" id="sonimcloud" name="00N2I00000DlVdZ" value="Sonim Cloud/Scout">
+      <label for="sonimcloud">SonimWare CLOUD & SCOUT</label><br>
+
+      <input type="checkbox" id="sonimscan" name="00N2I00000DlVdZ" value="Sonim Scan">
+      <label for="sonimscan">SonimWare SCAN</label><br>
+
+      <input type="checkbox" id="sonimsos" name="00N2I00000DlVdZ" value="Sonim SOS">
+      <label for="sonimsos">SonimWare SOS</label><br>
+
+      <input type="checkbox" id="XP100" name="00N2I00000DlVdZ" value="XP100">
+      <label for="sonimsos">XP100</label><br>
+
+      <input type="checkbox" id="H500MobileHotspot" name="00N2I00000DlVdZ" value="H500 Mobile Hotspot">
+      <label for="sonimsos">H500 Mobile Hotspot</label><br>
+
+      <input type="checkbox" id="USBW100" name="00N2I00000DlVdZ" value="USB W100">
+      <label for="sonimsos">USB W100</label><br>
+
+      <br>
+      <label for="00N2I00000DotGw">Total number of devices needed</label><span class="required">*</span><span class="info-icon">i</span>
+      <div class="help-text">Please only input numbers, no dashes or other characters</div>
+<input required id="00N2I00000DotGw" name="00N2I00000DotGw" size="20" type="text" />
+
+<!-- Info icon for help text -->
+<br>
+      <br>
+
+      <label>What is your purchase timeframe?</label> <br>
+      <input type="checkbox" id="now" name="00N2I00000DrRJv" value="Now" onclick="onlyOne(this)">
+<label for="now">Now</label><br>
+
+<input type="checkbox" id="within30days" name="00N2I00000DrRJv" value="Within 30 days" onclick="onlyOne(this)">
+<label for="within30days">Within 30 days</label><br>
+
+<input type="checkbox" id="31-90days" name="00N2I00000DrRJv" value="31-90 days" onclick="onlyOne(this)">
+<label for="31-90days">31-90 days</label><br>
+
+<input type="checkbox" id="fourtosixmonths" name="00N2I00000DrRJv" value="Four_to_six_months" onclick="onlyOne(this)">
+<label for="fourtosixmonths">4-6 months</label><br>
+
+<input type="checkbox" id="greaterthansixmonths" name="00N2I00000DrRJv" value="Greater than 6 months" onclick="onlyOne(this)">
+<label for="greaterthansixmonths">Greater than 6 months</label><br>
+
+<input type="checkbox" id="unsure" name="00N2I00000DrRJv" value="Unsure" onclick="onlyOne(this)">
+<label for="unsure">Unsure</label>
+      <br>
+      <br>
+
+
+      <label for="description">Additional Information</label>
+      <p class="small-text">
+        Please provide Sonim with any additional information regarding your intended use or inquiry. If you need to contact Customer Support please choose that option above or email support@sonimtech.com
+      </p>
+      <textarea  id="00N2I00000DosIN" name="00N2I00000DosIN" rows="3" type="text" wrap="soft"></textarea>
+
+      <p style="text-align: justify"> Sonim Technologies is committed to protecting and respecting your privacy, and we’ll only use your personal information to administer your account and to provide the products and services you requested from us. From time to time, we would like to contact you about our products and services, as well as other content that may be of interest to you. If you consent to us contacting you for this purpose, please tick below to say how you would like us to contact you:</p>
+
+      <input  id="emailOptOut" name="emailOptOut" type="checkbox" value="1" /><label for="emailOptOut">I agree to receive other communications from Sonim Technologies.</label>
+
+      <p style="text-align: justify"> You can unsubscribe from these communications at any time. For more information on how to unsubscribe, our privacy practices, and how we are committed to protecting and respecting your privacy, please review our Privacy Policy. By clicking submit below, you consent to allow Sonim Technologies to store and process the personal information submitted above to provide you the content requested.</p>
+
+      <input type="submit" name="submit" value="Submit">
+  </form>
+
+  <div id="thankYouModal" class="modal">
+    <div class="modal-content">
+        <p>Thank you for submitting the form</p>
+    </div>
+</div>
+
+  <script>
+
+    function onlyOne(checkbox) {
+      var checkboxes = document.getElementsByName('00N2I00000DrRJv');
+      checkboxes.forEach((item) => {
+        if (item !== checkbox) item.checked = false;
+      });
+    }
+
+    function handleSubmit(event) {
+      
+      
+
+      if (!validateCheckboxes()) {
+          return; 
+      }
+
+      const modal = document.getElementById("thankYouModal");
+      modal.style.display = "block";
+
+      setTimeout(function() {
+          document.getElementById("productForm").submit();
+      }, 2000); 
+  }
+  function validateCheckboxes() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][name="00N2I00000DlVdZ"]');
+    let isChecked = false;
+
+    checkboxes.forEach((checkbox) => {
+      if (checkbox.checked) {
+        isChecked = true;
+      }
+    });
+
+    if (!isChecked) {
+      alert('Please select at least one product of interest.');
+      event.preventDefault(); 
+      return false;
+    }
+
+    return true;
+  }
+
+  // Close the modal when the user clicks on <span> (x)
+  //function closeModal() {
+   //   const modal = document.getElementById("thankYouModal");
+   //   modal.style.display = "none";
+  //}
+
+  // Close the modal when the user clicks anywhere outside of the modal
+  window.onclick = function(event) {
+      const modal = document.getElementById("thankYouModal");
+      if (event.target === modal) {
+          modal.style.display = "none";
+      }}
+
+    const countryStates = {
+      "US": [
+        { "name": "Alabama", "code": "AL" }, { "name": "Alaska", "code": "AK" },
+        { "name": "Arizona", "code": "AZ" }, { "name": "Arkansas", "code": "AR" },
+        { "name": "California", "code": "CA" }, { "name": "Colorado", "code": "CO" },
+        { "name": "Connecticut", "code": "CT" }, { "name": "Delaware", "code": "DE" },
+        { "name": "Florida", "code": "FL" }, { "name": "Georgia", "code": "GA" },
+        { "name": "Hawaii", "code": "HI" }, { "name": "Idaho", "code": "ID" },
+        { "name": "Illinois", "code": "IL" }, { "name": "Indiana", "code": "IN" },
+        { "name": "Iowa", "code": "IA" }, { "name": "Kansas", "code": "KS" },
+        { "name": "Kentucky", "code": "KY" }, { "name": "Louisiana", "code": "LA" },
+        { "name": "Maine", "code": "ME" }, { "name": "Maryland", "code": "MD" },
+        { "name": "Massachusetts", "code": "MA" }, { "name": "Michigan", "code": "MI" },
+        { "name": "Minnesota", "code": "MN" }, { "name": "Mississippi", "code": "MS" },
+        { "name": "Missouri", "code": "MO" }, { "name": "Montana", "code": "MT" },
+        { "name": "Nebraska", "code": "NE" }, { "name": "Nevada", "code": "NV" },
+        { "name": "New Hampshire", "code": "NH" }, { "name": "New Jersey", "code": "NJ" },
+        { "name": "New Mexico", "code": "NM" }, { "name": "New York", "code": "NY" },
+        { "name": "North Carolina", "code": "NC" }, { "name": "North Dakota", "code": "ND" },
+        { "name": "Ohio", "code": "OH" }, { "name": "Oklahoma", "code": "OK" },
+        { "name": "Oregon", "code": "OR" }, { "name": "Pennsylvania", "code": "PA" },
+        { "name": "Puerto Rico", "code": "PR" },
+        { "name": "Rhode Island", "code": "RI" }, { "name": "South Carolina", "code": "SC" },
+        { "name": "South Dakota", "code": "SD" }, { "name": "Tennessee", "code": "TN" },
+        { "name": "Texas", "code": "TX" }, { "name": "Utah", "code": "UT" },
+        { "name": "US Virgin Islands", "code": "VI" },
+        { "name": "Vermont", "code": "VT" }, { "name": "Virginia", "code": "VA" },
+        { "name": "Washington", "code": "WA" }, { "name": "Washington DC", "code": "DC" },
+        { "name": "West Virginia", "code": "WV" },
+        { "name": "Wisconsin", "code": "WI" }, { "name": "Wyoming", "code": "WY" }
+
+      ],
+      "CA": [
+        { "name": "Alberta", "code": "AB" }, { "name": "British Columbia", "code": "BC" },
+        { "name": "Manitoba", "code": "MB" }, { "name": "New Brunswick", "code": "NB" },
+        { "name": "Newfoundland and Labrador", "code": "NL" }, { "name": "Nova Scotia", "code": "NS" },
+        { "name": "Ontario", "code": "ON" }, { "name": "Prince Edward Island", "code": "PE" },
+        { "name": "Quebec", "code": "QC" }, { "name": "Saskatchewan", "code": "SK" },
+        { "name": "Northwest Territories", "code": "NT" }, { "name": "Nunavut", "code": "NU" },
+        { "name": "Yukon", "code": "YT" }
+      ],
+      "IN": [
+        { "name": "Andhra Pradesh", "code": "AP" }, { "name": "Assam", "code": "AS" },
+        { "name": "Bihar", "code": "BR" }, { "name": "Chhattisgarh", "code": "CG" },
+        { "name": "Goa", "code": "GA" }, { "name": "Gujarat", "code": "GJ" },
+        { "name": "Haryana", "code": "HR" }, { "name": "Himachal Pradesh", "code": "HP" },
+        { "name": "Jharkhand", "code": "JH" }, { "name": "Karnataka", "code": "KA" },
+        { "name": "Kerala", "code": "KL" }, { "name": "Madhya Pradesh", "code": "MP" },
+        { "name": "Maharashtra", "code": "MH" }, { "name": "Manipur", "code": "MN" },
+        { "name": "Meghalaya", "code": "ML" }, { "name": "Mizoram", "code": "MZ" },
+        { "name": "Nagaland", "code": "NL" }, { "name": "Odisha", "code": "OD" },
+        { "name": "Punjab", "code": "PB" }, { "name": "Rajasthan", "code": "RJ" },
+        { "name": "Sikkim", "code": "SK" }, { "name": "Tamil Nadu", "code": "TN" },
+        { "name": "Telangana", "code": "TS" }, { "name": "Tripura", "code": "TR" },
+        { "name": "Uttar Pradesh", "code": "UP" }, { "name": "Uttarakhand", "code": "UK" },
+        { "name": "West Bengal", "code": "WB" }
+      ],
+      "AU": [
+        { "name": "Australian Capital Territory", "code": "ACT" }, { "name": "New South Wales", "code": "NSW" },
+        { "name": "Northern Territory", "code": "NT" }, { "name": "Queensland", "code": "QLD" },
+        { "name": "South Australia", "code": "SA" }, { "name": "Tasmania", "code": "TAS" },
+        { "name": "Victoria", "code": "VIC" }, { "name": "Western Australia", "code": "WA" }
+      ],
+
+      "IT": [
+        { "name": "Alessandria", "code": "AL" }, { "name": "Ancona", "code": "AN" },
+        { "name": "Arezzo", "code": "AR" }, { "name": "Asti", "code": "AT" },
+        { "name": "Aosta", "code": "AO" }, { "name": "Ascoli Piceno", "code": "AP" },
+        { "name": "Avellino", "code": "AV" }, { "name": "Bari", "code": "BA" },
+        { "name": "Bergamo", "code": "BG" }, { "name": "Benevento", "code": "BN" },
+        { "name": "Bolzano", "code": "BZ" },
+        { "name": "Barletta-Andria-Trani", "code": "BT" }, { "name": "Belluno", "code": "BL" },
+        { "name": "Biella", "code": "BI" }, { "name": "Bologna", "code": "BO" },
+        { "name": "Brescia", "code": "BS" }, { "name": "Brindisi", "code": "BR" },
+        { "name": "Cagliari", "code": "CA" }, { "name": "Caltanissetta", "code": "CL" },
+        { "name": "Carbonia-Iglesias", "code": "CI" },
+        { "name": "Campobasso", "code": "CB" }, { "name": "Caserta", "code": "CE" },
+        { "name": "Catania", "code": "CT" }, { "name": "Catanzaro", "code": "CZ" },
+        { "name": "Chieti", "code": "CH" }, { "name": "Como", "code": "CO" },
+        { "name": "Cosenza", "code": "CS" }, { "name": "Cremona", "code": "CR" },
+        { "name": "Crotone", "code": "KR" }, { "name": "Cuneo", "code": "CN" },
+        { "name": "Enna", "code": "EN" }, { "name": "Fermo", "code": "FM" },
+        { "name": "Ferrara", "code": "FE" }, { "name": "Florence", "code": "FL" },
+        { "name": "Foggia", "code": "FG" }, { "name": "Forli-Cesena ", "code": "FC" },
+        { "name": "Genoa", "code": "GE" }, { "name": "Gorizia", "code": "GO" },
+        { "name": "Grosseto", "code": "GR" }, { "name": "Imperia", "code": "IM" },
+        { "name": "Isernia", "code": "IS" }, { "name": "L'Aquila", "code": "AQ" },
+        { "name": "Lazio", "code": "LA" }, { "name": "Lecce", "code": "LE" },
+        { "name": "Crotone", "code": "KR" }, { "name": "Lecco", "code": "LC" },
+        { "name": "Livorno", "code": "LI" }, { "name": "Lodi", "code": "LO" },
+        { "name": "Latina", "code": "LT" }, { "name": "Lucca", "code": "LU" },
+        { "name": "Macerata", "code": "MC" }, { "name": "Mantua", "code": "MN" },
+        { "name": "Mantua", "code": "MN" }, { "name": "Modena", "code": "MO" },
+        { "name": "Massa-Carrara", "code": "MS" }, { "name": "Matera", "code": "MT" },
+        { "name": "Monza and Brianza", "code": "MB" },
+        { "name": "Milan", "code": "MI" }, { "name": "Modena", "code": "MO" },
+        { "name": "Messina", "code": "ME" }, { "name": "Massa and Carrara", "code": "MS" },
+        { "name": "Naples", "code": "NA" }, { "name": "Nuoro", "code": "NU" },
+        { "name": "Monza", "code": "MN" }, { "name": "Novara", "code": "NO" },
+        { "name": "Novosibirsk", "code": "NO" }, { "name": "Ogliastra", "code": "OG" },
+        { "name": "Oristano", "code": "OR" }, { "name": "Olbia-Tempio", "code": "OT" },
+        { "name": "Palermo", "code": "PA" }, { "name": "Piacenza", "code": "PC" },
+        { "name": "Padua", "code": "PD" }, { "name": "Pescara", "code": "PE" },
+        { "name": "Perugia", "code": "PG" }, { "name": "Pisa", "code": "PI" },
+        { "name": "Pordenone", "code": "PN" }, { "name": "Prato", "code": "PO" },
+        { "name": "Parma", "code": "PR" }, { "name": "Pistoia", "code": "PT" },
+        { "name": "Pesaro and Urbino", "code": "PU" }, { "name": "Pavia", "code": "PV" },
+        { "name": "Potenza", "code": "PZ" }, { "name": "Ravenna", "code": "RA" },
+        { "name": "Reggio Calabria", "code": "RC" }, { "name": "Reggio Emilia", "code": "RE" },
+        { "name": "Ragusa", "code": "RG" },
+        { "name": "Rieti", "code": "RI" },
+        { "name": "Rome", "code": "RM" },
+        { "name": "Rimini", "code": "RN" },
+        { "name": "Rovigo", "code": "RO" },
+        { "name": "Salerno", "code": "SA" },
+        { "name": "Siena", "code": "SI" },
+        { "name": "Sondrio", "code": "SO" },
+        { "name": "La Spezia", "code": "SP" },
+        { "name": "Syracuse", "code": "SR" },
+        { "name": "Sassari", "code": "SS" },
+        { "name": "Savona", "code": "SV" },
+        { "name": "Taranto", "code": "TA" },
+        { "name": "Teramo", "code": "TE" },
+        { "name": "Trento", "code": "TN" },
+        { "name": "Turin", "code": "TO" },
+        { "name": "Trapani", "code": "TP" },
+        { "name": "Terni", "code": "TR" },
+        { "name": "Trieste", "code": "TS" },
+        { "name": "Treviso", "code": "TV" },
+        { "name": "Udine", "code": "UD" },
+        { "name": "Varese", "code": "VA" },
+        { "name": "Verbano-Cusio-Ossola", "code": "VB" },
+        { "name": "Vercelli", "code": "VC" },
+        { "name": "Venice", "code": "VE" },
+        { "name": "Vicenza", "code": "VI" },
+        { "name": "Verona", "code": "VR" },
+        { "name": "Medio Campidano", "code": "VS" },
+        { "name": "Viterbo", "code": "VT" },
+        { "name": "Vibo Valentia", "code": "VV" }
+
+      ],
+
+      "BR": [
+        { "name": "Acre", "code": "AC" }, { "name": "Alagoas", "code": "AL" },
+        { "name": "Amapá", "code": "AP" }, { "name": "Amazonas", "code": "AM" },
+        { "name": "Bahia", "code": "BA" }, { "name": "Ceará", "code": "CE" },
+        { "name": "Distrito Federal", "code": "DF" }, { "name": "Espírito Santo", "code": "ES" },
+        { "name": "Goiás", "code": "GO" }, { "name": "Maranhão", "code": "MA" },
+        { "name": "Mato Grosso", "code": "MT" }, { "name": "Mato Grosso do Sul", "code": "MS" },
+        { "name": "Minas Gerais", "code": "MG" }, { "name": "Pará", "code": "PA" },
+        { "name": "Paraíba", "code": "PB" }, { "name": "Paraná", "code": "PR" },
+        { "name": "Pernambuco", "code": "PE" }, { "name": "Piauí", "code": "PI" },
+        { "name": "Rio de Janeiro", "code": "RJ" }, { "name": "Rio Grande do Norte", "code": "RN" },
+        { "name": "Rio Grande do Sul", "code": "RS" }, { "name": "Rondônia", "code": "RO" },
+        { "name": "Roraima", "code": "RR" }, { "name": "Santa Catarina", "code": "SC" },
+        { "name": "São Paulo", "code": "SP" }, { "name": "Sergipe", "code": "SE" },
+        { "name": "Tocantins", "code": "TO" }
+      ],
+      "CN": [
+        { "name": "Beijing", "code": "11" },
+        { "name": "Tianjin", "code": "12" }, { "name": "Hebei", "code": "13" },
+        { "name": "Shaanxi", "code": "14" }, { "name": "Nei Mongol	", "code": "15" },
+        { "name": "Liaoning", "code": "21" }, { "name": "Jilin", "code": "22" },
+        { "name": "Heilongjiang", "code": "23" }, { "name": "Shanghai", "code": "31" },
+        { "name": "Jiangsu", "code": "32" }, { "name": "Zhejiang", "code": "33" },
+        { "name": "Anhui", "code": "34" }, { "name": "Fujian", "code": "35" },
+        { "name": "Jiangxi", "code": "36" }, { "name": "Shandong", "code": "37" },
+        { "name": "Henan", "code": "41" }, { "name": "Hubei", "code": "42" },
+        { "name": "Hunan", "code": "43" }, { "name": "Guangdong", "code": "44" },
+        { "name": "Guangxi", "code": "45" }, { "name": "Hainan", "code": "46" },
+        { "name": "Chongqing", "code": "50" }, { "name": "Sichuan", "code": "51" },
+        { "name": "Guizhou", "code": "52" }, { "name": "Yunnan", "code": "53" },
+        { "name": "Xinjiang", "code": "54" }, { "name": "Shanxi", "code": "61" },
+        { "name": "Gansu", "code": "62" }, { "name": "Qinghai", "code": "63" },
+        { "name": "Ningxia", "code": "64" }, { "name": "Xinjiang", "code": "65" },
+        { "name": "Taiwan", "code": "71" }, { "name": "Hainan", "code": "81" },
+        { "name": "Hong Kong", "code": "91" }, { "name": "Macau", "code": "92" }
+      ],
+      "IE": [
+        { "name": "Clare", "code": "CE" }, { "name": "Cavan", "code": "CN" },
+        { "name": "Cork", "code": "CO" }, { "name": "Carlow", "code": "CW" },
+        { "name": "Dubin", "code": "D" }, { "name": "Donegal", "code": "DL" },
+        { "name": "Galway", "code": "G" }, { "name": "Kildare", "code": "KE" },
+        { "name": "Kikenny", "code": "KK" }, { "name": "Kerry", "code": "KY" },
+        { "name": "Longford", "code": "LD" }, { "name": "Louth", "code": "LH" },
+        { "name": "Limerick", "code": "LK" }, { "name": "Leitrim", "code": "LM" },
+        { "name": "Laois", "code": "LS" }, { "name": "Meath", "code": "MH" },
+        { "name": "Monaghan", "code": "MN" }, { "name": "Mayo", "code": "MO" },
+        { "name": "Offaly", "code": "OY" }, { "name": "Roscommon", "code": "RN" },
+        { "name": "Sligo", "code": "SO" }, { "name": "Tipperary", "code": "TA" },
+        { "name": "Waterford", "code": "WD" }, { "name": "Westmeath", "code": "WH" },
+        { "name": "Wexford", "code": "WX" }, { "name": "Wicklow", "code": "WW" }
+      ],
+      "MX": [
+        { "name": "Aguascalientes", "code": "AGU" }, { "name": "Baja California", "code": "BCN" },
+        { "name": "Baja California Sur", "code": "BCS" }, { "name": "Campeche", "code": "CAM" },
+        { "name": "Chiapas", "code": "CHP" }, { "name": "Chihuahua", "code": "CHH" },
+        { "name": "Coahuila", "code": "COA" }, { "name": "Colima", "code": "COL" },
+        { "name": "Durango", "code": "DUR" }, { "name": "Guanajuato", "code": "GUA" },
+        { "name": "Guerrero", "code": "GRO" }, { "name": "Hidalgo", "code": "HID" },
+        { "name": "Jalisco", "code": "JAL" }, { "name": "Mexico City", "code": "CDMX" },
+        { "name": "Mexico State", "code": "MEX" }, { "name": "Michoacán", "code": "MIC" },
+        { "name": "Morelos", "code": "MOR" }, { "name": "Nayarit", "code": "NAY" },
+        { "name": "Nuevo León", "code": "NLE" }, { "name": "Oaxaca", "code": "OAX" },
+        { "name": "Puebla", "code": "PUE" }, { "name": "Querétaro", "code": "QUE" },
+        { "name": "Quintana Roo", "code": "ROO" }, { "name": "San Luis Potosí", "code": "SLP" },
+        { "name": "Sinaloa", "code": "SIN" }, { "name": "Sonora", "code": "SON" },
+        { "name": "Tabasco", "code": "TAB" }, { "name": "Tamaulipas", "code": "TAM" },
+        { "name": "Tlaxcala", "code": "TLX" }, { "name": "Veracruz", "code": "VER" },
+        { "name": "Yucatán", "code": "YUC" }, { "name": "Zacatecas", "code": "ZAC" }
+      ]
+
+
+    };
+
+    document.getElementById('country_code').addEventListener('change', function () {
+      const country = this.value;
+      const statesDropdown = document.getElementById('state_code');
+
+      statesDropdown.innerHTML = '<option value="">--None--</option>';
+
+      if (country && countryStates[country]) {
+        countryStates[country].forEach(state => {
+          const option = document.createElement('option');
+          option.value = state.code;
+          option.textContent = state.name;
+          statesDropdown.appendChild(option);
+        });
+      }
+    });
+
+    function validateForm(event) {
+      const checkboxes = document.querySelectorAll('input[name="00N2I00000DlVdZ"]');
+      const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+      if (!isChecked) {
+        event.preventDefault();
+        alert("Please select at least one product.");
+      }
+    }
+  </script>
+
+</html>
